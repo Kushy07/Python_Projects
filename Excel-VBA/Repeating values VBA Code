@@ -1,0 +1,23 @@
+Sub RepeatValues()
+
+Dim x As Range, SelectedRange As Range, OutputRange As Range
+
+Range("E:F").ClearContents
+Range("E1:F1").Value = [{"Result","Sorted Data"}]
+
+Set SelectedRange = Application.Range("A2", Range("A2").End(xlDown).End(xlToRight))
+Set OutputRange = Application.Range("E2")
+
+For Each x In SelectedRange.Rows
+    Occurrence = x.Range("A1").Value
+    xNumber = x.Range("B1").Value
+    OutputRange.Resize(Occurrence, 1).Value = xNumber
+    Set OutputRange = OutputRange.Offset(Occurrence, 0)
+Next
+
+Range("E2:F" & Range("E" & Rows.Count).End(xlUp).Row).FillRight
+Range("F1", Range("F1").End(xlDown)).Sort Key1:=Range("F1"), Order1:=xlAscending, Header:=xlYes
+
+MsgBox "A new list has been created in E column with data repeated multiple times and sorted data in F column.", vbOKOnly, "Kush Rocks"
+
+End Sub

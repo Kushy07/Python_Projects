@@ -1,0 +1,190 @@
+function validateEntry()   {
+  var myGoogleSheet = SpreadsheetApp.getActiveSpreadsheet();
+  var sh_details = myGoogleSheet.getSheetByName("FILL_DETAILS");
+  var ui = SpreadsheetApp.getUi();
+
+  sh_details.getRange("C7").setBackground('#FFFFFF');
+  sh_details.getRange("C10").setBackground('#FFFFFF');
+  sh_details.getRange("C13").setBackground('#FFFFFF');
+  sh_details.getRange("C16").setBackground('#FFFFFF');
+  sh_details.getRange("C19").setBackground('#FFFFFF');
+  if(sh_details.getRange("C7").isBlank()==true)
+  {
+    ui.alert("Please enter Course Name");
+    sh_details.getRange("C7").activate();
+    sh_details.getRange("C7").setBackground('#FF0000');
+    return false;
+
+
+
+
+  }
+  if(sh_details.getRange("C10").isBlank()==true)
+  {
+    ui.alert("Please enter Subject");
+    sh_details.getRange("C10").activate();
+    sh_details.getRange("C10").setBackground('#FF0000');
+    return false;
+    
+
+
+
+  }
+  if(sh_details.getRange("C13").isBlank()==true)
+  {
+    ui.alert("Please enter Class");
+    sh_details.getRange("C13").activate();
+    sh_details.getRange("C13").setBackground('#FF0000');
+    return false;
+    
+
+
+
+  }
+  if(sh_details.getRange("C16").isBlank()==true)
+  {
+    ui.alert("Please enter Chapter");
+    sh_details.getRange("C16").activate();
+    sh_details.getRange("C16").setBackground('#FF0000');
+    return false;
+    
+
+
+
+  }
+  if(sh_details.getRange("C19").isBlank()==true)
+  {
+    ui.alert("Please enter Medium");
+    sh_details.getRange("C19").activate();
+    sh_details.getRange("C19").setBackground('#FF0000');
+    return false;
+
+
+
+
+  }
+
+
+  return true;
+
+
+
+
+
+
+}
+
+function submitData(){
+
+  var myGoogleSheet = SpreadsheetApp.getActiveSpreadsheet();
+
+  var shUserform = myGoogleSheet.getSheetByName("FILL_DETAILS");
+  var datasheet_JEE = myGoogleSheet.getSheetByName("INT_JEE");
+  var datasheet_NEET = myGoogleSheet.getSheetByName("INT_NEET");
+  
+  var ui= SpreadsheetApp.getUi();
+  var response = ui.alert("Submit","Do you want to create the rows?",ui.ButtonSet.YES_NO);
+  if(response==ui.Button.NO){
+    return;
+  }
+
+  if(validateEntry() == true){
+
+    var val1 = shUserform.getRange('C7').getValue()
+    var val2 = shUserform.getRange('Z2').getValue()
+    if(val1!=val2){
+      var blankRow=datasheet_JEE.getLastRow()+1;
+     datasheet_JEE.getRange(blankRow,1).setValue(shUserform.getRange("C7").getValue());
+     datasheet_JEE.getRange(blankRow,2).setValue(shUserform.getRange("C10").getValue());
+     datasheet_JEE.getRange(blankRow,3).setValue(shUserform.getRange("C13").getValue());
+     datasheet_JEE.getRange(blankRow,4).setValue(shUserform.getRange("C16").getValue());
+     datasheet_JEE.getRange(blankRow,5).setValue(new Date()).setNumberFormat('yyyymmdd');
+     datasheet_JEE.getRange(blankRow,6).setValue(shUserform.getRange("C19").getValue());
+
+
+     ui.alert('New Data Saved - Rows created for course - ' + shUserform.getRange("C16").getValue());
+
+     shUserform.getRange("C7").clear();
+     shUserform.getRange("C10").clear();
+     shUserform.getRange("C13").clear();
+     shUserform.getRange("C16").clear();
+     shUserform.getRange("C19").clear();
+
+    }
+    
+
+    else
+    {
+      var blankRow=datasheet_NEET.getLastRow()+1;
+     datasheet_NEET.getRange(blankRow,1).setValue(shUserform.getRange("C7").getValue());
+     datasheet_NEET.getRange(blankRow,2).setValue(shUserform.getRange("C10").getValue());
+     datasheet_NEET.getRange(blankRow,3).setValue(shUserform.getRange("C13").getValue());
+     datasheet_NEET.getRange(blankRow,4).setValue(shUserform.getRange("C16").getValue());
+     datasheet_NEET.getRange(blankRow,5).setValue(new Date()).setNumberFormat('yyyymmdd');
+     datasheet_NEET.getRange(blankRow,6).setValue(shUserform.getRange("C19").getValue());
+
+
+     ui.alert('New Data Saved - Rows created for course - ' + shUserform.getRange("C16").getValue());
+
+     shUserform.getRange("C7").clear();
+     shUserform.getRange("C10").clear();
+     shUserform.getRange("C13").clear();
+     shUserform.getRange("C16").clear();
+     shUserform.getRange("C19").clear();
+    }
+
+
+    
+  
+
+
+
+
+
+
+
+
+
+
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+}
+
+
+function pulldata(){
+
+     
+    
+      var myGoogleSheet = SpreadsheetApp.getActiveSpreadsheet();
+      var shUserform = myGoogleSheet.getSheetByName("FILL_DETAILS");
+      shUserform.getRange("Z3").clear();
+      
+      shUserform.getRange("Z3").setValue(shUserform.getRange("C4").getValue());
+      shUserform.getRange("C4").clear();
+      var ui= SpreadsheetApp.getUi();
+      ui.alert('Data retrieved for test_id ' + shUserform.getRange("C4").getValue());
+
+
+
+
+
+    }
